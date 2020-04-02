@@ -1,0 +1,57 @@
+@app.route('/getDataGot/',methods=['GET'])
+def getDataGot():
+    if request.method=='GET':
+        db=pymysql.connect("localhost","root","123456","test")#主机IP 登录名 登录密码 链接的数据库
+        #通过名字查询是用户信息否在表中
+        cursor=db.cursor()#获取操作游标
+        系统启用第一次创建数据表
+        sql="""
+		    CREATE TABLE IF NOT EXISTS `userinfo`(
+                `userid` CHAR(13),
+                `sex`  CHAR(8) NOT NULL,
+                `age` INT(3),
+                `addr` CHAR(60) NOT NULL,
+                `class` CHAR(20) NOT NULL,
+                `college` CHAR(20) NOT NULL,
+                `tel` CHAR(15),
+                `birth`  DATE,
+                `qq`  CHAR(14),
+                `email` CHAR(20),
+                 PRIMARY KEY (`userid`)
+            )ENGINE=InnoDB DEFAULT CHARSET=utf8;
+        """
+        try:
+            cursor.execute(sql)
+            db.commit()
+        except:
+            db.rollback()
+            print("初始化数据库失败！请检查")
+        userid = 16110203059
+        name ='刘树信'
+        sex ='男'
+        age = 23
+        addr = '山东省潍坊高密'
+        aclass = '交工1602'
+        college = '交通与车辆工程学院'
+        tel = '17853314162'
+        birth = '1996-10-31'
+        qq ='1569663570'
+        email='1569663570@qq.com'
+        sql="""
+		    INSERT INTO userinfo(userid,sex, age,addr,class,college,tel,birth,qq,email)
+            VALUES (userid,sex, age,addr,aclass,college,tel,birth,qq,email)
+		"""
+        sql="""
+		    INSERT INT userinfo(userid,sex, age,addr,class,college,tel,birth,qq,email)
+            VALUES (16110203059,'男', 23,'山东省潍坊高密','交工1602','交通与车辆工程学院','17853314162','1996-10-31','1569663570','1569663570@qq.com')
+		"""
+        #写入用户数据
+        try:
+            cursor.execute(sql)
+            db.commit()
+        except:
+            db.rollback()
+            print("数据库写入操作失败！请检查")
+        db.close()
+        response=make_response('<h1>收到get请求</h1>') # 必须有返回 否则会报错
+        return response

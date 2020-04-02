@@ -1,0 +1,26 @@
+#同时接受不确定个数位置参数和不确定个数关键字参数，并打印或对参数做操作
+def greet(name,greeting='你好',pun='!'):
+    print ('{0},{1}{2}'.format(name,greeting,pun))
+greet('liushuxin')
+greet('刘树信',greeting='你好呀',pun='。。。')
+
+
+
+#使用递归方式完成对数字列表的二分查找
+list1=[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16]
+def search(seq,number,lower=0,upper=None):
+    if upper is None:
+        upper=len(seq)-1
+    if lower==upper:
+        assert number==seq[upper]
+        return upper;
+    else:
+        middle=(upper+lower)//2
+        if number>seq[middle]:
+            return search(seq,number,middle+1,upper)
+        else:
+            return search(seq, number, lower, middle)
+search(list1, 2)
+
+
+
